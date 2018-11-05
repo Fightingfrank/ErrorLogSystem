@@ -1,17 +1,50 @@
 package com.errorLogSystem.util;
 
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
-public class ListComparator implements Comparator{
+import com.errorLogSystem.model.ErrorObject;
 
-	private int flag;
-	
-	if(flag == 0)
-	@Override
-	public int compare(Object o1, Object o2) {
-		
-		return 0;
+public class ListComparator{
+
+	public static List<ErrorObject> sortList(List<ErrorObject> errorObjectList, int flag){
+		// 从大到小
+		if(flag == 0){
+			
+			Comparator c = new Comparator<ErrorObject>(){
+
+				@Override
+				public int compare(ErrorObject o1, ErrorObject o2) {
+					if(Integer.valueOf(o1.getNum()) > Integer.valueOf(o2.getNum())){
+						return 1;
+					}else{
+						return -1;
+					}
+				}
+				
+			};
+			
+			Collections.sort(errorObjectList, c);
+		}else{  //从小到大
+			Comparator c = new Comparator<ErrorObject>(){
+
+				@Override
+				public int compare(ErrorObject o1, ErrorObject o2) {
+					if(Integer.valueOf(o1.getNum()) > Integer.valueOf(o2.getNum())){
+						return -1;
+					}else{
+						return 1;
+					}
+				}
+				
+			};
+			
+			Collections.sort(errorObjectList, c);
+		}
+		return errorObjectList;
 	}
-
+	
+	
 	
 }

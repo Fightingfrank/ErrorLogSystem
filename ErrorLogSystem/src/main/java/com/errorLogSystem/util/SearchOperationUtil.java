@@ -2,6 +2,7 @@ package com.errorLogSystem.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,13 +20,14 @@ import com.errorLogSystem.model.ErrorObject;
 public class SearchOperationUtil {
 	
 	private static Logger logger = LoggerFactory.getLogger(SearchOperationUtil.class);
+	
 	@Autowired
 	private RedisUtil redisUtil;
-	
 	
 	public List<ErrorObject> getTop10ErrorList(){
 		List<ErrorObject> lists = new ArrayList<ErrorObject>();
 		lists = getAllError();
+		lists = sortList(lists,0);
 		if(lists.size() != 0){
 			if(lists.size() >= 10){
 				return lists.subList(0, 10);
@@ -63,16 +65,12 @@ public class SearchOperationUtil {
 			}
 		}  
 		
-		return null;
+		return errorList;
 	}
 	
-	public List<ErrorObject> sortList(int flag){
-		//从小到大
-		if(flag == 0 ){
-//			Collections.sor
-		}
+	public List<ErrorObject> sortList(List<ErrorObject> list, int flag){
 		
-		return null;
+		return ListComparator.sortList(list, flag);
 	}
 	
 	

@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
 import com.errorLogSystem.model.ErrorObject;
 import com.errorLogSystem.util.SearchOperationUtil;
+
 
 @Component
 public class ErrorInforServiceImpl implements ErrorInfoService{
@@ -28,8 +30,9 @@ public class ErrorInforServiceImpl implements ErrorInfoService{
 		}else if(list.size() <10){
 			logger.info("list 记录不足10个");
 		}
-//		JSONObject.to
-//		return ;
+		String result = JSON.toJSONString(list);
+		System.out.println(result);
+		return result;
 	}
 
 }	

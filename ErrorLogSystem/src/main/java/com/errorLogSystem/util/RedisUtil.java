@@ -12,7 +12,6 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Component
-//@PropertySource("classpath:/Application.properties")  
 public class RedisUtil implements InitializingBean{
 	
 	@Value("${redis.ip}")  
@@ -45,7 +44,6 @@ public class RedisUtil implements InitializingBean{
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		JedisPoolConfig config = new JedisPoolConfig();
-		
 		config.setMaxTotal(Integer.valueOf(jedisPool_maxAction));
 		config.setMaxIdle(Integer.valueOf(jedisPool_maxIdle));
 		config.setMaxWaitMillis(Integer.valueOf(jedisPool_maxWait));
@@ -57,11 +55,6 @@ public class RedisUtil implements InitializingBean{
 	public Jedis getJedisConnection(){
 		return jedisPool.getResource();
 	}
-	
-	public String toString(){
-		return redis_ip + "  : " + redis_port  + jedisPool_testOnBorrow;
-	}
-	
 	
 
 }

@@ -24,15 +24,15 @@ public class SearchOperationUtil {
 	@Autowired
 	private RedisUtil redisUtil;
 	
-	public List<ErrorObject> getTop10ErrorList(){
+	public List<ErrorObject> getTopNErrorList(int n){
 		List<ErrorObject> lists = new ArrayList<ErrorObject>();
 		lists = getAllError();
-		lists = sortList(lists,0);
+		lists = sortList(lists,1);
 		if(lists.size() != 0){
-			if(lists.size() >= 10){
-				return lists.subList(0, 10);
+			if(lists.size() >= n){
+				return lists.subList(0, n);
 			}else{
-				logger.info("error不足10条 ： size = " + lists.size());
+				logger.info("error不足 " + n + "条 ： size = " + lists.size());
 				return lists;
 			}
 		}else{
@@ -42,8 +42,14 @@ public class SearchOperationUtil {
 		
 	}
 	
-	public ErrorObject getErrorByName(String name){
+	public ErrorObject getErrorByURL(String url){
 		
+		for(ErrorObject object : getAllError()){
+			if(object.getHashUrl().equalsIgnoreCase(url))
+				return object;
+		}
+		
+		logger.error("没有查询" + url);
 		return null;
 	}
 	
@@ -51,27 +57,43 @@ public class SearchOperationUtil {
 		List<ErrorObject> errorList = new ArrayList<ErrorObject>();
 		Jedis jedis = redisUtil.getJedisConnection();
 		Set<String> sets = jedis.keys("URLERROR*");
+		System.out.println(sets.getClass());
 		for (String str : sets) {  
-			
-			System.out.println(str);
 		    Map<String,String> keys = jedis.hgetAll(str);
 		    for (Map.Entry<String, String> entry : keys.entrySet()) { 
 		    	ErrorObject object = new ErrorObject();
 				object.setHashUrl(str);
 		    	object.setKey(entry.getKey());
 		    	object.setNum(entry.getValue());
-		    	System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue()); 
 		    	errorList.add(object);	
 			}
 		}  
-		
 		return errorList;
 	}
 	
-	public List<ErrorObject> sortList(List<ErrorObject> list, int flag){
-		
-		return ListComparator.sortList(list, flag);
+	public List<ErrorObject> getLastNError(int n){
+		List<ErrorObject> lists = new ArrayList<ErrorObject>();
+		lists = sortList(getAllError(),1);
+		if(lists.size() != 0){
+			if(lists.size() >= n){
+				return lists.subList(lists.size() - n, lists.size());
+			}else{
+				logger.info("error不足 " + n + "条 ： size = " + lists.size());
+				return lists;
+			}
+		}else{
+			logger.error("error记录为空");
+		}
+		return null;
 	}
 	
+	public List<ErrorObject> getNewError(){
+		
+		return null;
+	}
+	
+	public List<ErrorObject> sortList(List<ErrorObject> list, int flag){
+		return ListComparator.sortList(list, flag);
+	}
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.errorLogSystem.model.ErrorObject;
 import com.errorLogSystem.util.RedisUtil;
 
+
 @Component
 public class RefreshErrorTopList {
 	

@@ -1,10 +1,22 @@
 package com.errorLogSystem.model;
 
-public class ErrorObject {
+import java.io.Serializable;
+
+
+/**
+ * Error信息model
+ * @author lijunhui
+ *
+ */
+public class ErrorObject implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5170610852083348315L;
 	private String key;
 	private String num;
 	private String hashUrl;
-	
+
 	public String getHashUrl() {
 		return hashUrl;
 	}

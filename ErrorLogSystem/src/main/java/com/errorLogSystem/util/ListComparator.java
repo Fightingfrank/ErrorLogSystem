@@ -18,7 +18,9 @@ public class ListComparator{
 				public int compare(ErrorObject o1, ErrorObject o2) {
 					if(Integer.valueOf(o1.getNum()) > Integer.valueOf(o2.getNum())){
 						return 1;
-					}else{
+					}else if(Integer.valueOf(o1.getNum()) == Integer.valueOf(o2.getNum())){
+						return -1;
+					}else {
 						return -1;
 					}
 				}
@@ -26,15 +28,17 @@ public class ListComparator{
 			};
 			
 			Collections.sort(errorObjectList, c);
-		}else{  //从小到大
+		}else if(flag == 1){  //从小到大
 			Comparator c = new Comparator<ErrorObject>(){
 
 				@Override
 				public int compare(ErrorObject o1, ErrorObject o2) {
-					if(Integer.valueOf(o1.getNum()) > Integer.valueOf(o2.getNum())){
-						return -1;
-					}else{
+					if(Integer.valueOf(o1.getNum()) < Integer.valueOf(o2.getNum())){
 						return 1;
+					}else if(Integer.valueOf(o1.getNum()) == Integer.valueOf(o2.getNum())){
+						return -1;
+					}else {
+						return -1;
 					}
 				}
 				
@@ -44,7 +48,4 @@ public class ListComparator{
 		}
 		return errorObjectList;
 	}
-	
-	
-	
 }

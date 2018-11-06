@@ -4,10 +4,13 @@ import java.util.List;
 
 
 
+
+
 import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -19,6 +22,10 @@ import com.errorLogSystem.util.SearchOperationUtil;
 public class ErrorInforServiceImpl implements ErrorInfoService{
 
 	private static Logger logger = LoggerFactory.getLogger(ErrorInforServiceImpl.class);
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
 	
 	@Autowired
 	private SearchOperationUtil searchOperationUtil;
@@ -56,6 +63,15 @@ public class ErrorInforServiceImpl implements ErrorInfoService{
 			logger.error("未查找到对应URL的error");
 		}
 		return null;
+	}
+	
+	
+	@Override
+	public String getNewError() {
+		
+		List<ErrorObject> object = searchOperationUtil.getNewError();
+		
+		return JSON.toJSONString(object);
 	}
 	
 	

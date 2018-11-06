@@ -38,4 +38,9 @@ public class ErrorSystemController {
 	public String getErrorByName(@RequestParam(name = "url") String url){
 		return infoService.getErrorByURL(url);
 	}
+	
+	@RequestMapping("/getNewError")
+	public String getNewError(){
+		return infoService.getNewError();
+	}
 }

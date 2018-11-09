@@ -26,8 +26,8 @@ public class ErrorSystemController {
 	
 	@RequestMapping("/getTopNError")
 	public String getTopNError(@RequestParam(name = "num") String num){
-		return infoService.getTopNError(Integer.parseInt(num));
 	}
+	return infoService.getTopNError(Integer.parseInt(num));
 
 	@RequestMapping("/getLastNError")
 	public String getLastNError(@RequestParam(name = "num") String num){

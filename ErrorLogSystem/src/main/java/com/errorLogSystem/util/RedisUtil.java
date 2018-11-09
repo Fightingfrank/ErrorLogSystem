@@ -21,8 +21,8 @@ public class RedisUtil implements InitializingBean{
 	private String redis_port;
 	
 	@Value("${redis.timeout}")
-	private String redis_timeout;
 	
+	private String redis_timeout;
 	@Value("${jedis.pool.maxAction}")
 	private String jedisPool_maxAction;
 	

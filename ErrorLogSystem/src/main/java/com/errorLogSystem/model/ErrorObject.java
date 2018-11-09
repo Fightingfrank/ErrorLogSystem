@@ -16,6 +16,7 @@ public class ErrorObject implements Serializable{
 	private String key;
 	private String num;
 	private String hashUrl;
+	private String priority;
 
 	public String getHashUrl() {
 		return hashUrl;
@@ -35,5 +36,13 @@ public class ErrorObject implements Serializable{
 	public void setNum(String num) {
 		this.num = num;
 	}
+	public String getPriority() {
+		return priority;
+	}
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+	
+	
 	
 }

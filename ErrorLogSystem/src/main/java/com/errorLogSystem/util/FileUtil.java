@@ -47,8 +47,8 @@ public class FileUtil {
 	
 	public Object readFileToBean(){
 		String path = ClassUtils.getDefaultClassLoader().getResource("").getPath() + File.separator + errorFileName;
-		File file = createFile(path);
-		if(null != file){
+		File file = new File(path);
+		if(file.exists()){
 			try {
 				FileInputStream in;
 				in = new FileInputStream(file);
@@ -66,7 +66,8 @@ public class FileUtil {
 				e.printStackTrace();
 			}
 		}else{
-			logger.info("创建文件出错");
+			logger.info("还未生成文件，需要通过redis初始化数据");
+			return null;
 		}
 		return null;
 	}
@@ -86,5 +87,4 @@ public class FileUtil {
 			return file;
 		}
 	}
-
 }

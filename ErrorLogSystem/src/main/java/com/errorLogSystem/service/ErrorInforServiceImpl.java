@@ -11,6 +11,7 @@ import java.util.List;
 
 
 
+
 import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ import org.springframework.util.ClassUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.errorLogSystem.model.ErrorObject;
+import com.errorLogSystem.model.ModifyErrorPriorityReqBean;
 import com.errorLogSystem.util.SearchOperationUtil;
 
 
@@ -40,30 +42,8 @@ public class ErrorInforServiceImpl implements ErrorInfoService{
 	@Override
 	public String getTopNError(int n) {
 		
-		List<ErrorObject> list = searchOperationUtil.getTopNErrorList(5);
-		
-		
-		// 测试代码
-//		System.out.println(this.getClass().getResource(this));
-		System.out.println(ClassUtils.getDefaultClassLoader().getResource("").getPath());
-		
-		String str = ClassUtils.getDefaultClassLoader().getResource("").getPath() + File.separator + "errorFile.txt";
-		File file = new File(str);
-		
-		if(file.exists()){
-			System.out.println("文件存在");
-		}else{
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println("创建文件成功" + file.getPath());
-			
-		}
-		
-		//测试代码
-		
+		List<ErrorObject> list = searchOperationUtil.getTopNErrorList(n);
+				
 		if(null == list){
 			logger.error("list 返回为null");
 		}else if(list.size() <10){
@@ -87,7 +67,7 @@ public class ErrorInforServiceImpl implements ErrorInfoService{
 
 	@Override
 	public String getErrorByURL(String url) {
-		ErrorObject object = searchOperationUtil.getErrorByURL(url);
+		ErrorObject object = searchOperationUtil.getErrorByKey(url);
 		if(null != object)
 			return JSONObject.toJSONString(object);
 		else {
@@ -104,6 +84,25 @@ public class ErrorInforServiceImpl implements ErrorInfoService{
 		
 		return JSON.toJSONString(object);
 	}
+
+	@Override
+	public String modifyErrorPriority(ModifyErrorPriorityReqBean reqBean) {
+		
+		String key = reqBean.getKey();
+		String priority = reqBean.getPriority();
+		ErrorObject object = searchOperationUtil.getErrorByKey(key);
+		if(null != object){
+			logger.info(key + "更新优先级成功 :" + priority);
+			object.setPriority(priority);
+			// 需要更新排序顺序
+		}else{
+			logger.info("没有查找到该key对应的error信息");
+			return "";
+		}
+		return JSONObject.toJSONString(object);
+	}
+	
+	
 	
 	
 	

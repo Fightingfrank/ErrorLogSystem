@@ -3,12 +3,16 @@ package com.errorLogSystem.model;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 
 /**
  * ErrorList model 维护errorList，每次定时任务该处的数据,前端修改也修改该处的数据
  * @author lijunhui
  *
  */
+
+@Component
 public class ErrorListModel implements Serializable{
 	
 	/**
@@ -19,17 +23,6 @@ public class ErrorListModel implements Serializable{
 	private List<ErrorObject> errorList;
 	
 	private List<ErrorObject> newErrorList;
-	
-	private static ErrorListModel errorListModel = new ErrorListModel();
-	
-	private ErrorListModel(){
-		
-	}
-	
-	public static ErrorListModel getInstance(){
-		return errorListModel;
-	}
-
 	
 	public List<ErrorObject> getErrorList() {
 		return errorList;

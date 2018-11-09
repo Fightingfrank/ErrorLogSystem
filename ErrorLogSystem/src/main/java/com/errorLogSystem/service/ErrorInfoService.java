@@ -1,5 +1,8 @@
 package com.errorLogSystem.service;
 
+import com.errorLogSystem.model.ErrorObject;
+import com.errorLogSystem.model.ModifyErrorPriorityReqBean;
+
 public interface ErrorInfoService {
 	
 	/**
@@ -29,4 +32,11 @@ public interface ErrorInfoService {
 	 */
 	public String getNewError();
 	
+	
+	/**
+	 * 修改对应error的优先级
+	 * @param reqBean
+	 * @return
+	 */
+	public String modifyErrorPriority(ModifyErrorPriorityReqBean reqBean);
 }

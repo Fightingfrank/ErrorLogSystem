@@ -1,11 +1,11 @@
 package com.errorLogSystem.util;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+
+import com.errorLogSystem.model.ErrorListModel;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -40,7 +40,7 @@ public class RedisUtil implements InitializingBean{
 	private boolean jedisPool_testOnReturn;
 	
 	private JedisPool jedisPool = null;
-
+	
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		JedisPoolConfig config = new JedisPoolConfig();
@@ -56,5 +56,4 @@ public class RedisUtil implements InitializingBean{
 		return jedisPool.getResource();
 	}
 	
-
-}
+}	
